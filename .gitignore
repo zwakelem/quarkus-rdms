@@ -1,0 +1,17 @@
+.idea
+*.env
+.idea/*
+target/
+pom.xml
+order-demand.iml
+setupBuildAndRun.sh
+
+order-demand-web/node/
+order-demand-web/target/
+order-demand-web/node_modules/
+order-demand-web/order-demand-web.iml
+
+order-demand-service/target/
+order-demand-service/order-demand-service.iml
+order-demand-service/src/main/java/com/bmw/les/order/demand/control/mq/listener/OrderMessageListener.java
+order-demand-service/src/main/java/com/bmw/les/order/demand/control/mq/listener/ServiceMessageListener.java
