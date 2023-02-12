@@ -20,12 +20,21 @@ public class ArtistRepositoryTest {
     @Test
     @TestTransaction
     public void shouldCreateAnArtist() throws SQLException {
+        long count = repository.count();
+        int listAll = repository.listAll().size();
+        assertEquals(count, listAll);
+        assertEquals(repository.listAllArtistsSorted().size(), listAll);
         Artist artist = new Artist("name", "bio");
 
         repository.persist(artist);
         assertNotNull(artist.getId());
 
+        assertEquals(count + 1, repository.count());
+
         artist = repository.findById(artist.getId());
         assertEquals("name", artist.getName());
+
+        repository.deleteById(artist.getId());
+        assertEquals(count, repository.count());
     }
 }
