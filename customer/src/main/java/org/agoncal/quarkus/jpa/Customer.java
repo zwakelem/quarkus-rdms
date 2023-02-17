@@ -1,40 +1,45 @@
 package org.agoncal.quarkus.jpa;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.time.Instant;
 
 /**
- * Example JPA entity.
- *
- * To use it, get access to a JPA EntityManager via injection.
- *
- * {@code
- *     @Inject
- *     EntityManager em;
- *
- *     public void doSomething() {
- *         MyEntity entity1 = new MyEntity();
- *         entity1.setField("field-1");
- *         em.persist(entity1);
- *
- *         List<MyEntity> entities = em.createQuery("from MyEntity", MyEntity.class).getResultList();
- *     }
- * }
+ * @author Antonio Goncalves
+ * http://www.antoniogoncalves.org
+ * --
  */
 @Entity
-@Table(name="t_customer")
+@Table(name = "t_customers")
 public class Customer {
 
+    // ======================================
+    // =             Attributes             =
+    // ======================================
+
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @Column(name = "first_name", length = 50, nullable = false)
     private String firstName;
+
+    @Column(name = "last_name", length = 50, nullable = false)
     private String lastName;
+
+    @Column(name = "e_mail", nullable = false)
     private String email;
+
+    @Column(name = "created_date", nullable = false)
     private Instant createdDate = Instant.now();
+
+    // ======================================
+    // =            Constructors            =
+    // ======================================
 
     public Customer() {
     }
@@ -45,12 +50,12 @@ public class Customer {
         this.email = email;
     }
 
+    // ======================================
+    // =          Getters & Setters         =
+    // ======================================
+
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getFirstName() {
@@ -81,7 +86,14 @@ public class Customer {
         return createdDate;
     }
 
-    public void setCreatedDate(Instant createdDate) {
-        this.createdDate = createdDate;
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", createdDate=" + createdDate +
+                '}';
     }
 }

@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Entity
-@Table(name = "t_publisher")
+@Table(name = "t_publishers")
 public class Publisher extends PanacheEntity {
 
     @Column(length = 50, nullable = false)
@@ -18,11 +18,23 @@ public class Publisher extends PanacheEntity {
     @Column(name = "created_date", nullable = false)
     public Instant createdDate = Instant.now();
 
-    public Publisher() {
-    }
+    // ======================================
+    // =           Constructors             =
+    // ======================================
 
     public Publisher(String name) {
         this.name = name;
+    }
+
+    public Publisher() {
+    }
+
+    // ======================================
+    // =              Methods               =
+    // ======================================
+
+    public static List<Publisher> findContainingName(String name) {
+        return Publisher.list("name like ?1", "%" + name + "%");
     }
 
     public static Optional<Publisher> findByName(String name) {
@@ -31,5 +43,14 @@ public class Publisher extends PanacheEntity {
 
     public static List<Publisher> findContainName(String name) {
         return Publisher.list("name like ?1", "%" + name + "%");
+    }
+
+    @Override
+    public String toString() {
+        return "Publisher{" +
+                "name='" + name + '\'' +
+                ", createdDate=" + createdDate +
+                ", id=" + id +
+                '}';
     }
 }
