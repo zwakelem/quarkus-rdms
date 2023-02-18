@@ -10,7 +10,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
-@Path("/pages/items")
+@Path("/page/items")
 @Produces(MediaType.TEXT_HTML)
 public class ItemPage {
 
@@ -32,7 +32,7 @@ public class ItemPage {
     @Path("/books")
     public TemplateInstance showBookById(@QueryParam("query") String query,
                                          @QueryParam("sort") @DefaultValue("id")String sort,
-                                         @QueryParam("pageIndex") @DefaultValue("0") Integer pageIndex,
+                                         @QueryParam("page") @DefaultValue("0") Integer pageIndex,
                                          @QueryParam("size") @DefaultValue("1000") Integer pageSize) {
         return Templates.books(Book.find(query, Sort.by(sort)).page(pageIndex, pageSize).list())
             .data("query", query)
@@ -55,7 +55,11 @@ public class ItemPage {
 
     @GET
     @Path("/cds")
-    public TemplateInstance showAllCDs() {
-        return Templates.cds(CD.listAll());
+    public TemplateInstance showAllCDs(@QueryParam("query") String query, @QueryParam("sort") @DefaultValue("id") String sort, @QueryParam("page") @DefaultValue("0") Integer pageIndex, @QueryParam("size") @DefaultValue("1000") Integer pageSize) {
+        return Templates.cds(CD.find(query, Sort.by(sort)).page(pageIndex, pageSize).list())
+                .data("query", query)
+                .data("sort", sort)
+                .data("pageIndex", pageIndex)
+                .data("pageSize", pageSize);
     }
 }
